@@ -1,0 +1,16 @@
+using System.Security.Cryptography;
+
+namespace Anazon.Utils;
+
+public class RefreshTokenGenerator
+{
+    public static string GenerateRefreshToken()
+    {
+        var randomNumber = new byte[32];
+        using var rng = RandomNumberGenerator.Create();
+        rng.GetBytes(randomNumber);
+        return Convert.ToBase64String(randomNumber);
+    }
+
+
+}
