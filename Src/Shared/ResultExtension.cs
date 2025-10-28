@@ -35,22 +35,36 @@ public static class ResultExtension
     }
 
 
-    public static IResult ToBadRequestHttpResult<T>(this Result<T> result)
+    public static IResult ToUnauthorized<T>(this Result<T> result)
     {
         return result.Match(
-            onSuccess: () => throw new InvalidOperationException("Cannot convert a success result to a bad request HTTP result."),
-            onFailure: error => Results.BadRequest(
+            onSuccess: () => throw new InvalidOperationException("Cannot convert a success result to an Unauthorized request HTTP result."),
+            onFailure: error => Results.Problem(
                 new ProblemDetails
                 {
-                    Title = "Bad Request",
+                    Title = "UnAuthorized",
                     Detail = error.Message,
-                    Status = 400,
+                    Status = StatusCodes.Status401Unauthorized,
                     Extensions = { { "ErrorCode", error.Code } }
                 }
             )
         );
     }
-
+        public static IResult ToBadRequestHttpResult<T>(this Result<T> result)
+    {
+        return result.Match(
+            onSuccess: () => throw new InvalidOperationException("Cannot convert a success result to a bad request HTTP result."),
+            onFailure: error => Results.Problem(
+                new ProblemDetails
+                {
+                    Title = "Bad Request",
+                    Detail = error.Message,
+                    Status = StatusCodes.Status400BadRequest,
+                    Extensions = { { "ErrorCode", error.Code } }
+                }
+            )
+        );
+    }
     /* 
         <summary>
         Converts a Result (non-generic) to an IResult HTTP response.

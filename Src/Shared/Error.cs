@@ -30,6 +30,9 @@ public record Error
     public static Error PhoneAlreadyInUse =>
         new("PhoneAlreadyInUse", "The provided phone number is already in use.");   
         
+    public static Error InvalidCredentials =>
+        new("InvalidCredentials", "Invalid Credentials.");   
+        
          
 }   
 
