@@ -10,5 +10,8 @@ public class User : AuditableEntity
     public string PasswordHash { get; set; } = default!;
     public UserStatus Status { get; set; } = UserStatus.Active;
     public DateTime RegisteredAt { get; set; } = DateTime.UtcNow;
-    public IEnumerable<UserRole> Roles { get; set; }  = new List<UserRole>();
+    public IEnumerable<UserRole> Roles { get; set; } = new List<UserRole>();
+
+    public bool CanLogin => new[] { UserStatus.Active, UserStatus.PendingVerification }
+                            .Contains(Status);
 }

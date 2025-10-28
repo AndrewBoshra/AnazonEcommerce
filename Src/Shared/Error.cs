@@ -33,6 +33,12 @@ public record Error
     public static Error InvalidCredentials =>
         new("InvalidCredentials", "Invalid Credentials.");   
         
+    public static Error ExpiredOrInvalidRefreshToken =>
+        new("ExpiredOrInvalidRefreshToken", "The refresh token is either expired or invalid");   
+        
+    public static Error UserIsDisabledOrDeleted =>
+        new("UserIsDisabledOrDeleted", "User is either disabled or deleted");   
+        
          
 }   
 

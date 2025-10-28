@@ -54,6 +54,10 @@ public static class Login
             if (user == null || !PasswordHasher.VerifyHash(request.Password, user.PasswordHash)) 
                 return Result.Failure<UserAuthInfo>(Error.InvalidCredentials);
 
+            if (!user.CanLogin)
+            {
+                return Result.Failure<UserAuthInfo>(Error.UserIsDisabledOrDeleted);
+            }
 
             (string token, RefreshToken refreshToken) =  await tokenService.GenerateTokens(user);
             await dbContext.SaveChangesAsync(cancellationToken);
