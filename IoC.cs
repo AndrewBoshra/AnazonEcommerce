@@ -89,8 +89,7 @@ public static partial class IoC
         services.AddCarter();
         services.AddValidatorsFromAssembly(assembly);
         services.AddOutputCache();
-        services.AddOpenApi();
-
+        services.AddOpenApi(opts=>opts.AddDocumentTransformer<BearerSecuritySchemeTransformer>());
 
     }
 
