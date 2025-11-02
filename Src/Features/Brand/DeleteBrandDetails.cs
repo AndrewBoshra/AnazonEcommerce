@@ -1,6 +1,7 @@
 using Anazon.Configs;
 using Anazon.Database;
 using Anazon.Shared;
+using Anazon.Shared.Authorization;
 using Anazon.Shared.Contracts;
 
 using Carter;
@@ -51,6 +52,7 @@ public class DeleteBrandEndpoint : ICarterModule
                 error => error == Error.BrandNotFound ? result.ToNotFoundHttpResult() : result.ToBadRequestHttpResult()
             );
         })
+        .RequirePermission(Permissions.Brands.Delete)
         .WithTags(AppRouteTags.Brands);
     }
 }

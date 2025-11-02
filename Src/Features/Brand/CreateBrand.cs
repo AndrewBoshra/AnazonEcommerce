@@ -2,6 +2,7 @@ using Anazon.Configs;
 using Anazon.Database;
 using Anazon.Models;
 using Anazon.Shared;
+using Anazon.Shared.Authorization;
 using Anazon.Shared.Contracts;
 using Anazon.Shared.Services;
 using Anazon.Utils;
@@ -67,6 +68,7 @@ public class CreateBrandEndpoint : ICarterModule
                 error => result.ToBadRequestHttpResult()
             );
         })
+        .RequirePermission(Permissions.Brands.View)
         .WithTags(AppRouteTags.Brands);
     }
 }

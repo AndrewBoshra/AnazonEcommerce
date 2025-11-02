@@ -2,6 +2,7 @@ using Anazon.Configs;
 using Anazon.Database;
 using Anazon.Models;
 using Anazon.Shared;
+using Anazon.Shared.Authorization;
 using Anazon.Shared.Contracts;
 using Anazon.Shared.Services;
 using Anazon.Utils;
@@ -76,6 +77,7 @@ public class UpdateBrandEndpoint : ICarterModule
                 error => error == Error.BrandNotFound ? result.ToNotFoundHttpResult() : result.ToBadRequestHttpResult()
             );
         })
+        .RequirePermission(Permissions.Brands.Update)
         .WithTags(AppRouteTags.Brands);
     }
 }

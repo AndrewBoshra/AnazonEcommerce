@@ -1,6 +1,7 @@
 using Anazon.Configs;
 using Anazon.Database;
 using Anazon.Shared;
+using Anazon.Shared.Authorization;
 using Anazon.Shared.Contracts;
 using Anazon.Shared.Db;
 using Anazon.Utils;
@@ -62,6 +63,7 @@ public class ListBrandsEndpoint : ICarterModule
             var result = await mediator.Send(query, cancellationToken);
             return result.ToHttpResult();
         })
+        .RequirePermission(Permissions.Brands.List)
         .WithTags(AppRouteTags.Brands);
     }
 }
