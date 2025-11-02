@@ -40,7 +40,7 @@ public class GetBrandDetailsEndpoint : ICarterModule
 {
     public void AddRoutes(IEndpointRouteBuilder app)
     {
-        app.MapGet(AppRoutes.Brands + "/:id", async (int id, IMediator mediator, CancellationToken cancellationToken) =>
+        app.MapGet(AppRoutes.Brands + "/{id:int}", async (int id, IMediator mediator, CancellationToken cancellationToken) =>
         {
             var result = await mediator.Send(new GetBrandDetails.GetBrandQuery(id), cancellationToken);
             return result.Match(
