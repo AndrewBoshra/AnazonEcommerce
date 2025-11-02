@@ -37,7 +37,10 @@ public record Error
         new("ExpiredOrInvalidRefreshToken", "The refresh token is either expired or invalid");   
         
     public static Error UserIsDisabledOrDeleted =>
-        new("UserIsDisabledOrDeleted", "User is either disabled or deleted");   
+        new("UserIsDisabledOrDeleted", "User is either disabled or deleted");
+
+    public static Error BrandNotFound =>
+        new("BrandNotFound", "No brand found with the specified id.");   
         
          
 }   
