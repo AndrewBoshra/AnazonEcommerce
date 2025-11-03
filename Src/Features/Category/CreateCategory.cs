@@ -67,7 +67,7 @@ public class CreateCategoryEndpoint : ICarterModule
                 error => result.ToBadRequestHttpResult()
             );
         })
-        .RequirePermission(Permissions.Category.View)
+        .RequirePermission(Permissions.Category.Create)
         .WithTags(AppRouteTags.Categories);
     }
 }
