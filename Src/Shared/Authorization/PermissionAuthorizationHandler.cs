@@ -1,4 +1,5 @@
 using System.Security.Claims;
+using Anazon.Configs;
 using Anazon.Database;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
@@ -10,22 +11,19 @@ public sealed class PermissionAuthorizationHandler(AppDbContext dbContext) : Aut
 
     protected override async Task HandleRequirementAsync(AuthorizationHandlerContext context, PermissionRequirement requirement)
     {
-        var userIdClaim = context.User.Claims.FirstOrDefault(
-            c => c.Type == ClaimTypes.NameIdentifier
-        )?.Value;
-
-        if (!int.TryParse(userIdClaim, out int userId))
-            return;
+        var roles = context.User.Claims
+            .Where(c => c.Type == ClaimTypes.Role)
+            .Select(c => c.Value!)
+            .Append(Roles.Anonymous);
 
 
         var hasPermission = await dbContext.Roles
-                .Where(r => r.Members.Any(m => m.UserId == userId))
+                .Where(r => roles.Contains(r.Key))
                 .AnyAsync(r => r.RolePermissions.Any(rp => rp.Permission.Key == requirement.Permission));
 
 
         if (hasPermission)
             context.Succeed(requirement);
-
 
     }
 }

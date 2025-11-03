@@ -52,7 +52,7 @@ public class DeleteBrandEndpoint : ICarterModule
                 error => error == Error.BrandNotFound ? result.ToNotFoundHttpResult() : result.ToBadRequestHttpResult()
             );
         })
-        .RequirePermission(Permissions.Brands.Delete)
+        .RequirePermission(Permissions.Brand.Delete)
         .WithTags(AppRouteTags.Brands);
     }
 }

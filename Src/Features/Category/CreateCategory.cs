@@ -9,23 +9,22 @@ using Anazon.Utils;
 using Carter;
 using FluentValidation;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 
 namespace Anazon.Features.Auth;
 
 
-public static class CreateBrand
+public static class CreateCategory
 {
 
-    public record CreateBrandCommand(
+    public record CreateCategoryCommand(
         string Name,
         string? Description
-    ) : IRequest<Result<BrandDetails>>;
+    ) : IRequest<Result<CategoryDetails>>;
 
 
 
 
-    public class Validator : AbstractValidator<CreateBrandCommand>
+    public class Validator : AbstractValidator<CreateCategoryCommand>
     {
         public Validator()
         {
@@ -37,30 +36,30 @@ public static class CreateBrand
 
     public class Handler(
         AppDbContext dbContext
-        ) : IRequestHandler<CreateBrandCommand, Result<BrandDetails>>
+        ) : IRequestHandler<CreateCategoryCommand, Result<CategoryDetails>>
     {
-        public async Task<Result<BrandDetails>> Handle(CreateBrandCommand request, CancellationToken cancellationToken)
+        public async Task<Result<CategoryDetails>> Handle(CreateCategoryCommand request, CancellationToken cancellationToken)
         {
-            var brand = new Models.Brand
+            var category = new Models.Category
             {
                 Name = request.Name.AsNormalized(),
                 Description = request.Description
             };
 
-            dbContext.Brands.Add(brand);
+            dbContext.Categories.Add(category);
             await dbContext.SaveChangesAsync(cancellationToken);
 
-            return Result.Success(brand.ToBrandDetailsContract());
+            return Result.Success(category.ToCategoryDetailsContract());
         }
     }
 
 
 }
-public class CreateBrandEndpoint : ICarterModule
+public class CreateCategoryEndpoint : ICarterModule
 {
     public void AddRoutes(IEndpointRouteBuilder app)
     {
-        app.MapPost(AppRoutes.Brands , async (CreateBrand.CreateBrandCommand command, IMediator mediator, CancellationToken cancellationToken) =>
+        app.MapPost(AppRoutes.Categories, async (CreateCategory.CreateCategoryCommand command, IMediator mediator, CancellationToken cancellationToken) =>
         {
             var result = await mediator.Send(command, cancellationToken);
             return result.Match(
@@ -68,7 +67,7 @@ public class CreateBrandEndpoint : ICarterModule
                 error => result.ToBadRequestHttpResult()
             );
         })
-        .RequirePermission(Permissions.Brand.Create)
-        .WithTags(AppRouteTags.Brands);
+        .RequirePermission(Permissions.Category.View)
+        .WithTags(AppRouteTags.Categories);
     }
 }

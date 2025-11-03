@@ -10,7 +10,8 @@ public class RoleConfig : IEntityTypeConfiguration<Role>
     {
         builder.HasData([
             new Role(){ Id = 1 , Key = "Admin", Name = "Admin" },
-            new Role(){ Id = 2 , Key = "Customer", Name = "Customer" }
+            new Role(){ Id = 2 , Key = "Customer", Name = "Customer" },
+            new Role(){ Id = 3 , Key = "Anonymous", Name = "Anonymous" },
         ]);
     }
 }

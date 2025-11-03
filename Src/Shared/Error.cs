@@ -42,6 +42,12 @@ public record Error
     public static Error BrandNotFound =>
         new("BrandNotFound", "No brand found with the specified id.");   
         
+    public static Error CategoryNotFound =>
+        new("CategoryNotFound", "No Category found with the specified id.");   
+        
+    public static Error CategoryCantBeDeletedContainsProducts =>
+        new("CategoryCantBeDeletedContainsProducts", "Category can't be deleted as it contains some products");   
+        
          
 }   
 

@@ -1,5 +1,6 @@
 
 using Anazon.Configs;
+using Anazon.Shared.Authorization;
 using Carter;
 
 namespace Anazon;

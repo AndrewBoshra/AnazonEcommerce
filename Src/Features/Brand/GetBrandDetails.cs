@@ -49,7 +49,7 @@ public class GetBrandDetailsEndpoint : ICarterModule
                 error => error == Error.BrandNotFound ? result.ToNotFoundHttpResult() : result.ToBadRequestHttpResult()
             );
         })
-        .RequirePermission(Permissions.Brands.View)
+        .RequirePermission(Permissions.Brand.View)
         .WithTags(AppRouteTags.Brands);
     }
 }

@@ -77,7 +77,7 @@ public class UpdateBrandEndpoint : ICarterModule
                 error => error == Error.BrandNotFound ? result.ToNotFoundHttpResult() : result.ToBadRequestHttpResult()
             );
         })
-        .RequirePermission(Permissions.Brands.Update)
+        .RequirePermission(Permissions.Brand.Update)
         .WithTags(AppRouteTags.Brands);
     }
 }

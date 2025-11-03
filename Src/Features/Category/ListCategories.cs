@@ -14,26 +14,26 @@ using Microsoft.EntityFrameworkCore;
 namespace Anazon.Features.Auth;
 
 
-public static class ListBrands
+public static class ListCategories
 {
 
-    public class ListBrandsQuery : BasePagedQuery, IRequest<Result<ListingResult<Brand>>>;
+    public class ListCategoriesQuery : BasePagedQuery, IRequest<Result<ListingResult<Category>>>;
 
     public class Handler(
         AppDbContext dbContext
-        ) : IRequestHandler<ListBrandsQuery, Result<ListingResult<Brand>>>
+        ) : IRequestHandler<ListCategoriesQuery, Result<ListingResult<Category>>>
     {
 
-        public void ApplyFilters(ref IQueryable<Models.Brand> query, string? normalizedSearch)
+        public void ApplyFilters(ref IQueryable<Models.Category> query, string? normalizedSearch)
         {
             if (!string.IsNullOrEmpty(normalizedSearch))
             {
                 query = query.Where(b => b.Name.Contains(normalizedSearch));
             }
         }
-        public async Task<Result<ListingResult<Brand>>> Handle(ListBrandsQuery request, CancellationToken cancellationToken)
+        public async Task<Result<ListingResult<Category>>> Handle(ListCategoriesQuery request, CancellationToken cancellationToken)
         {
-            var query = dbContext.Brands.AsNoTracking();
+            var query = dbContext.Categories.AsNoTracking();
 
             var normalizedSearch = request.Q?.AsNormalized();
             ApplyFilters(ref query, normalizedSearch);
@@ -45,25 +45,25 @@ public static class ListBrands
                 .ApplyPagination(paginationContext)
                 .ToListAsync(cancellationToken);
 
-            return Result.Success(ListingResult<Brand>.FromQueryResult(
+            return Result.Success(ListingResult<Category>.FromQueryResult(
                 paginationContext,
-                items.Select(b => b.ToBrandContract()),
+                items.Select(b => b.ToCategoryContract()),
                 totalItems
             ));
         }
     }
 
 }
-public class ListBrandsEndpoint : ICarterModule
+public class ListCategoriesEndpoint : ICarterModule
 {
     public void AddRoutes(IEndpointRouteBuilder app)
     {
-        app.MapGet(AppRoutes.Brands + "/", async ([AsParameters] ListBrands.ListBrandsQuery query, IMediator mediator, CancellationToken cancellationToken) =>
+        app.MapGet(AppRoutes.Categories + "/", async ([AsParameters] ListCategories.ListCategoriesQuery query, IMediator mediator, CancellationToken cancellationToken) =>
         {
             var result = await mediator.Send(query, cancellationToken);
             return result.ToHttpResult();
         })
-        .RequirePermission(Permissions.Brand.List)
-        .WithTags(AppRouteTags.Brands);
+        .RequirePermission(Permissions.Category.List)
+        .WithTags(AppRouteTags.Categories);
     }
 }
