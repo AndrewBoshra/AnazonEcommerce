@@ -48,6 +48,12 @@ public record Error
     public static Error CategoryCantBeDeletedContainsProducts =>
         new("CategoryCantBeDeletedContainsProducts", "Category can't be deleted as it contains some products");   
         
+    public static Error CategoryCantBeDeletedHasChildren =>
+        new("CategoryCantBeDeletedHasChildren", "Category can't be deleted as it has some children");   
+        
+    public static Error CategoryInvalidParentId =>
+        new("CategoryInvalidParentId", "Invalid ParentCategoryId");   
+        
          
 }   
 

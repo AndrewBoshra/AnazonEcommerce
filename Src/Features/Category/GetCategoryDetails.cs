@@ -31,8 +31,12 @@ public static class GetCategoryDetails
             {
                 return Result.Failure<CategoryDetails>(Error.CategoryNotFound);
             }
+            var Children = await dbContext.Categories
+                .AsNoTracking()
+                .Where(c => c.ParentCategoryId == request.Id)
+                .ToListAsync(cancellationToken);
 
-            return Result.Success(Category.ToCategoryDetailsContract());
+            return Result.Success(Category.ToCategoryDetailsContract(Children));
         }
     }
 

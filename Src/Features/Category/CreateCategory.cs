@@ -1,3 +1,4 @@
+using System.Diagnostics.Contracts;
 using Anazon.Configs;
 using Anazon.Database;
 using Anazon.Models;
@@ -9,6 +10,7 @@ using Anazon.Utils;
 using Carter;
 using FluentValidation;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 
 namespace Anazon.Features.Auth;
 
@@ -18,8 +20,9 @@ public static class CreateCategory
 
     public record CreateCategoryCommand(
         string Name,
-        string? Description
-    ) : IRequest<Result<CategoryDetails>>;
+        string? Description,
+        int? ParentCategoryId
+    ) : IRequest<Result<Shared.Contracts.Category>>;
 
 
 
@@ -36,20 +39,23 @@ public static class CreateCategory
 
     public class Handler(
         AppDbContext dbContext
-        ) : IRequestHandler<CreateCategoryCommand, Result<CategoryDetails>>
+        ) : IRequestHandler<CreateCategoryCommand, Result<Shared.Contracts.Category>>
     {
-        public async Task<Result<CategoryDetails>> Handle(CreateCategoryCommand request, CancellationToken cancellationToken)
+        public async Task<Result<Shared.Contracts.Category>> Handle(CreateCategoryCommand request, CancellationToken cancellationToken)
         {
+            var validParent = request.ParentCategoryId is null || await dbContext.Categories.AnyAsync(c => c.Id == request.ParentCategoryId, cancellationToken: cancellationToken);
+            if (!validParent) return Result.Failure<Shared.Contracts.Category>(Error.CategoryInvalidParentId);
             var category = new Models.Category
             {
                 Name = request.Name.AsNormalized(),
-                Description = request.Description
+                Description = request.Description,
+                ParentCategoryId  = request.ParentCategoryId
             };
 
             dbContext.Categories.Add(category);
             await dbContext.SaveChangesAsync(cancellationToken);
 
-            return Result.Success(category.ToCategoryDetailsContract());
+            return Result.Success(category.ToCategoryContract());
         }
     }
 

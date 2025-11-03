@@ -37,6 +37,12 @@ public static class DeleteCategory
             {
                 return Result.Failure<CategoryDetails>(Error.CategoryCantBeDeletedContainsProducts);
             }
+            bool hasChildren = await dbContext.Categories.AnyAsync(c => c.ParentCategoryId == request.Id, cancellationToken);
+
+            if (hasChildren)
+            {
+                return Result.Failure<CategoryDetails>(Error.CategoryCantBeDeletedContainsProducts);
+            }
 
             dbContext.Categories.Remove(new Models.Category { Id = Category.Id });
             await dbContext.SaveChangesAsync(cancellationToken);

@@ -14,14 +14,15 @@ using Microsoft.EntityFrameworkCore;
 namespace Anazon.Features.Auth;
 
 
-public static class ListCategories
+public static class ListCategoryChildren
 {
 
-    public class ListCategoriesQuery : BasePagedQuery, IRequest<Result<ListingResult<Category>>>;
+    public class ListCategoriesFilters : BasePagedQuery;
+    public record ListCategoryChildrenQuery(int Id, ListCategoriesFilters Filters) : IRequest<Result<ListingResult<Category>>>;
 
     public class Handler(
         AppDbContext dbContext
-        ) : IRequestHandler<ListCategoriesQuery, Result<ListingResult<Category>>>
+        ) : IRequestHandler<ListCategoryChildrenQuery, Result<ListingResult<Category>>>
     {
 
         public void ApplyFilters(ref IQueryable<Models.Category> query, string? normalizedSearch)
@@ -31,17 +32,28 @@ public static class ListCategories
                 query = query.Where(b => b.Name.Contains(normalizedSearch));
             }
         }
-        public async Task<Result<ListingResult<Category>>> Handle(ListCategoriesQuery request, CancellationToken cancellationToken)
+        public async Task<Result<ListingResult<Category>>> Handle(ListCategoryChildrenQuery request, CancellationToken cancellationToken)
         {
+            var parentId = request.Id;
 
-            var normalizedSearch = request.Q?.AsNormalized();
+            var validId = await dbContext.Categories.AnyAsync(c => c.Id == parentId, cancellationToken);
+
+            if (!validId)
+            {
+                return Result.Failure<ListingResult<Category>>(Error.CategoryNotFound);
+            }
+            
+            var filters = request.Filters;
+            var normalizedSearch = filters.Q?.AsNormalized();
+
             var query = dbContext.Categories
-                    .Where(c => c.ParentCategoryId == null)
+                    .Where(c => c.ParentCategoryId == parentId)
                     .AsNoTracking();
+            
             ApplyFilters(ref query, normalizedSearch);
 
             var totalItems = await query.CountAsync(cancellationToken);
-            var paginationContext = request.GetPaginationContext();
+            var paginationContext = filters.GetPaginationContext();
             var items = await query
                 .OrderByDescending(b => b.CreatedAt)
                 .ApplyPagination(paginationContext)
@@ -56,12 +68,13 @@ public static class ListCategories
     }
 
 }
-public class ListCategoriesEndpoint : ICarterModule
+public class ListCategoryChildrenEndpoint : ICarterModule
 {
     public void AddRoutes(IEndpointRouteBuilder app)
     {
-        app.MapGet(AppRoutes.Categories + "/", async ([AsParameters] ListCategories.ListCategoriesQuery query, IMediator mediator, CancellationToken cancellationToken) =>
+        app.MapGet(AppRoutes.Categories + "/{id:int}/children", async(int id, [AsParameters] ListCategoryChildren.ListCategoriesFilters filters, IMediator mediator, CancellationToken cancellationToken) =>
         {
+            var query = new ListCategoryChildren.ListCategoryChildrenQuery(id, filters);
             var result = await mediator.Send(query, cancellationToken);
             return result.ToHttpResult();
         })
