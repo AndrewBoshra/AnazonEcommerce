@@ -52,9 +52,18 @@ public record Error
         new("CategoryCantBeDeletedHasChildren", "Category can't be deleted as it has some children");   
         
     public static Error CategoryInvalidParentId =>
-        new("CategoryInvalidParentId", "Invalid ParentCategoryId");   
-        
-         
+        new("CategoryInvalidParentId", "Invalid ParentCategoryId");
+
+    public static Error CategoryInvalidId =>
+        new("CategoryInvalidId", "Invalid CategoryId");
+
+
+    public static Error AttributeNotFound =>
+        new("AttributeNotFound", "No Attribute found with the specified id.");
+    
+    public static Error AttributeCantBeDeletedContainsProducts =>
+        new("AttributeCantBeDeletedContainsProducts", "Attribute can't be deleted as it contains some products");
+    
 }   
 
 
