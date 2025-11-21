@@ -33,6 +33,14 @@ public class RolePermissionConfig : IEntityTypeConfiguration<RolePermission>
             new RolePermission(){ Id = 14 ,  RoleId = 1, PermissionId = 14 },
             new RolePermission(){ Id = 15 ,  RoleId = 1, PermissionId = 15 },
         ]);
+       
+        builder.HasData([
+            new RolePermission(){ Id = 16 ,  RoleId = 1, PermissionId = 16 },
+            new RolePermission(){ Id = 17 ,  RoleId = 1, PermissionId = 17 },
+            new RolePermission(){ Id = 18 ,  RoleId = 1, PermissionId = 18 },
+            new RolePermission(){ Id = 19 ,  RoleId = 1, PermissionId = 19 },
+            new RolePermission(){ Id = 20 ,  RoleId = 1, PermissionId = 20 },
+        ]);
 
 
 
@@ -44,6 +52,8 @@ public class RolePermissionConfig : IEntityTypeConfiguration<RolePermission>
             new RolePermission(){ Id = 1004 , RoleId = 3, PermissionId = 7 },
             new RolePermission(){ Id = 1005 , RoleId = 3, PermissionId = 11 },
             new RolePermission(){ Id = 1006 , RoleId = 3, PermissionId = 12 },
+            new RolePermission(){ Id = 1007 , RoleId = 3, PermissionId = 16 },
+            new RolePermission(){ Id = 1008 , RoleId = 3, PermissionId = 17 },
         ]);
     }
 }

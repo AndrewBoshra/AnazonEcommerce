@@ -64,6 +64,17 @@ public record Error
     public static Error AttributeCantBeDeletedContainsProducts =>
         new("AttributeCantBeDeletedContainsProducts", "Attribute can't be deleted as it contains some products");
     
+    public static Error CategoryAttributeValuesAlreadyExist(List<string> values) =>
+        new(
+            "CategoryAttributeValuesAlreadyExist",
+            "The following attribute values already exist: " + string.Join(", ", values)
+        );
+    
+
+    public static Error AttributeValueNotFound =>
+        new("AttributeValueNotFound", "No Attribute Value found with the specified value.");
+    public static Error AttributeValueInUse =>
+        new("AttributeValueInUse", "Attribute Value can't be deleted as it is in use by some products.");
 }   
 
 

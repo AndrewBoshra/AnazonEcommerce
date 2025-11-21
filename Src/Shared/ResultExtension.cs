@@ -35,6 +35,13 @@ public static class ResultExtension
     }
 
 
+    public static IResult ToCreatedHttpResult(this Result result)
+    {
+        return result.Match(
+            onSuccess: () => Results.Created(),
+            onFailure: error => throw new AppException("Cannot convert a failure result to a Created HTTP result.")
+        );
+    }
     public static IResult ToCreatedHttpResult<T>(this Result<T> result)
     {
         return result.Match(

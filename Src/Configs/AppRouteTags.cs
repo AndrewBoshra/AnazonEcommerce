@@ -6,4 +6,5 @@ public static class AppRouteTags
     public const string Brands = "Brands"; 
     public const string Categories = "Categories"; 
     public const string Attributes = "Attributes"; 
+    public const string AttributeValues = "AttributeValues"; 
 }

@@ -6,5 +6,6 @@ public static class AppRoutes
     public const string BaseAuth = Base + "/auth"; 
     public const string Brands = Base + "/brands"; 
     public const string Categories = Base + "/categories"; 
-    public const string Attributes = Base + "/Attributes"; 
+    public const string Attributes = Base + "/attributes"; 
+    public const string AttributeValues = Base + "/attributes/{AttributeId:int}/values"; 
 }

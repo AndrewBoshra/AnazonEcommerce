@@ -8,5 +8,5 @@ public class Attribute : AuditableEntity
     public int CategoryId { get; set; }
     public Category Category { get; set; } = default!;
 
-    public AttributeValue[] Values { get; set; } = Array.Empty<AttributeValue>();
+    public IEnumerable<AttributeValue> Values { get; set; } = new List<AttributeValue>();
 }
