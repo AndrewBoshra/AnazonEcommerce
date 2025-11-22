@@ -9,5 +9,6 @@ public class Product : AuditableEntity
     public Brand? Brand { get; set; }
     public int CategoryId { get; set; }
     public Category Category { get; set; } = default!;
+    public IEnumerable<ProductTag> ProductTags { get; set; } = new List<ProductTag>();
 
 }
