@@ -17,6 +17,7 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
     public DbSet<Models.Attribute> Attributes { get; set; }
     public DbSet<AttributeValue> AttributeValues { get; set; }
     public DbSet<ProductVariantAttributeValue> ProductVariantAttributeValues { get; set; }
+    public DbSet<Tag> Tags { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

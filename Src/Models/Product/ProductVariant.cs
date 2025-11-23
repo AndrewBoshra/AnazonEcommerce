@@ -8,4 +8,5 @@ public class ProductVariant : AuditableEntity
     public decimal Price { get; set; }
     public int Stock { get; set; }
 
+    public IEnumerable<ProductVariantAttributeValue> AttributeValues { get; set; } = new List<ProductVariantAttributeValue>();    
 }

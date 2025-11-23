@@ -10,5 +10,6 @@ public class Product : AuditableEntity
     public int CategoryId { get; set; }
     public Category Category { get; set; } = default!;
     public IEnumerable<ProductTag> ProductTags { get; set; } = new List<ProductTag>();
+    public IEnumerable<ProductVariant> Variants { get; set; } = new List<ProductVariant>();
 
 }

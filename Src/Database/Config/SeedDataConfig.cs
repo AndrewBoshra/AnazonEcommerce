@@ -185,3 +185,64 @@ public class ProductTagSeedConfig : IEntityTypeConfiguration<ProductTag>
         );
     }
 }
+
+public class AttributeSeedConfig : IEntityTypeConfiguration<Anazon.Models.Attribute>
+{
+    public void Configure(EntityTypeBuilder<Anazon.Models.Attribute> builder)
+    {
+        var now = new DateTime(2025, 11, 22, 0, 0, 0, DateTimeKind.Utc);
+
+        builder.HasData(
+            new Anazon.Models.Attribute { Id = 1, Name = "Size", CategoryId = 2, CreatedAt = now }, // Shoes
+            new Anazon.Models.Attribute { Id = 2, Name = "Size", CategoryId = 3, CreatedAt = now }, // Shirts
+            new Anazon.Models.Attribute { Id = 3, Name = "Color", CategoryId = 1, CreatedAt = now } // Clothing
+        );
+    }
+}
+
+public class AttributeValueSeedConfig : IEntityTypeConfiguration<AttributeValue>
+{
+    public void Configure(EntityTypeBuilder<AttributeValue> builder)
+    {
+        var now = new DateTime(2025, 11, 22, 0, 0, 0, DateTimeKind.Utc);
+
+        builder.HasData(
+            // Shoe sizes
+            new AttributeValue { Id = 1, AttributeId = 1, Value = "8", CreatedAt = now },
+            new AttributeValue { Id = 2, AttributeId = 1, Value = "9", CreatedAt = now },
+            new AttributeValue { Id = 3, AttributeId = 1, Value = "10", CreatedAt = now },
+            new AttributeValue { Id = 4, AttributeId = 1, Value = "11", CreatedAt = now },
+            // Shirt sizes
+            new AttributeValue { Id = 5, AttributeId = 2, Value = "S", CreatedAt = now },
+            new AttributeValue { Id = 6, AttributeId = 2, Value = "M", CreatedAt = now },
+            new AttributeValue { Id = 7, AttributeId = 2, Value = "L", CreatedAt = now },
+            new AttributeValue { Id = 8, AttributeId = 2, Value = "XL", CreatedAt = now },
+            // Colors
+            new AttributeValue { Id = 9, AttributeId = 3, Value = "Black", CreatedAt = now },
+            new AttributeValue { Id = 10, AttributeId = 3, Value = "White", CreatedAt = now },
+            new AttributeValue { Id = 11, AttributeId = 3, Value = "Blue", CreatedAt = now },
+            new AttributeValue { Id = 12, AttributeId = 3, Value = "Red", CreatedAt = now }
+        );
+    }
+}
+
+public class ProductVariantAttributeValueSeedConfig : IEntityTypeConfiguration<ProductVariantAttributeValue>
+{
+    public void Configure(EntityTypeBuilder<ProductVariantAttributeValue> builder)
+    {
+        var now = new DateTime(2025, 11, 22, 0, 0, 0, DateTimeKind.Utc);
+
+        builder.HasData(
+            new ProductVariantAttributeValue { Id = 1, ProductVariantId = 1, AttributeValueId = 2, CreatedAt = now }, // variant1 size 9
+            new ProductVariantAttributeValue { Id = 2, ProductVariantId = 1, AttributeValueId = 9, CreatedAt = now }, // variant1 color Black
+            new ProductVariantAttributeValue { Id = 3, ProductVariantId = 2, AttributeValueId = 3, CreatedAt = now }, // variant2 size 10
+            new ProductVariantAttributeValue { Id = 4, ProductVariantId = 2, AttributeValueId = 10, CreatedAt = now }, // variant2 color White
+            new ProductVariantAttributeValue { Id = 5, ProductVariantId = 3, AttributeValueId = 6, CreatedAt = now }, // variant3 size M
+            new ProductVariantAttributeValue { Id = 6, ProductVariantId = 3, AttributeValueId = 11, CreatedAt = now }, // variant3 color Blue
+            new ProductVariantAttributeValue { Id = 7, ProductVariantId = 5, AttributeValueId = 3, CreatedAt = now }, // variant5 size 10
+            new ProductVariantAttributeValue { Id = 8, ProductVariantId = 5, AttributeValueId = 12, CreatedAt = now }, // variant5 color Red
+            new ProductVariantAttributeValue { Id = 9, ProductVariantId = 6, AttributeValueId = 7, CreatedAt = now }, // variant6 size L
+            new ProductVariantAttributeValue { Id = 10, ProductVariantId = 6, AttributeValueId = 10, CreatedAt = now } // variant6 color White
+        );
+    }
+}

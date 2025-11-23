@@ -3,6 +3,7 @@ using System;
 using Anazon.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Anazon.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20251122131416_seed3")]
+    partial class seed3
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -525,31 +528,6 @@ namespace Anazon.Migrations
                         {
                             Id = 20,
                             Key = "permissions.attributeValues.delete"
-                        },
-                        new
-                        {
-                            Id = 21,
-                            Key = "permissions.products.list"
-                        },
-                        new
-                        {
-                            Id = 22,
-                            Key = "permissions.products.view"
-                        },
-                        new
-                        {
-                            Id = 23,
-                            Key = "permissions.products.create"
-                        },
-                        new
-                        {
-                            Id = 24,
-                            Key = "permissions.products.update"
-                        },
-                        new
-                        {
-                            Id = 25,
-                            Key = "permissions.products.delete"
                         });
                 });
 
@@ -1528,36 +1506,6 @@ namespace Anazon.Migrations
                         },
                         new
                         {
-                            Id = 21,
-                            PermissionId = 21,
-                            RoleId = 1
-                        },
-                        new
-                        {
-                            Id = 22,
-                            PermissionId = 22,
-                            RoleId = 1
-                        },
-                        new
-                        {
-                            Id = 23,
-                            PermissionId = 23,
-                            RoleId = 1
-                        },
-                        new
-                        {
-                            Id = 24,
-                            PermissionId = 24,
-                            RoleId = 1
-                        },
-                        new
-                        {
-                            Id = 25,
-                            PermissionId = 25,
-                            RoleId = 1
-                        },
-                        new
-                        {
                             Id = 1001,
                             PermissionId = 1,
                             RoleId = 3
@@ -1602,18 +1550,6 @@ namespace Anazon.Migrations
                         {
                             Id = 1008,
                             PermissionId = 17,
-                            RoleId = 3
-                        },
-                        new
-                        {
-                            Id = 1009,
-                            PermissionId = 21,
-                            RoleId = 3
-                        },
-                        new
-                        {
-                            Id = 1010,
-                            PermissionId = 22,
                             RoleId = 3
                         });
                 });

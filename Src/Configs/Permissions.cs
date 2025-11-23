@@ -40,6 +40,14 @@ public static partial class Permissions
         public const string Update = "permissions.attributeValues.update";
         public const string Delete = "permissions.attributeValues.delete";
     }
+    public static class Product
+    {
+        public const string List = "permissions.products.list";
+        public const string View = "permissions.products.view";
+        public const string Create = "permissions.products.create";
+        public const string Update = "permissions.products.update";
+        public const string Delete = "permissions.products.delete";
+    }
 }
 
 

@@ -75,6 +75,32 @@ public record Error
         new("AttributeValueNotFound", "No Attribute Value found with the specified value.");
     public static Error AttributeValueInUse =>
         new("AttributeValueInUse", "Attribute Value can't be deleted as it is in use by some products.");
+
+
+    public static Error InvalidBrandId =>
+        new("InvalidBrandId", "The specified BrandId is invalid.");
+    public static Error InvalidCategoryId =>
+        new("InvalidCategoryId", "The specified CategoryId is invalid.");
+
+
+    public static Error TagsNotFound(List<string> missingTags) =>
+        new(
+            "TagsNotFound",
+            "The following tags were not found: " + string.Join(", ", missingTags)
+        );
+
+    public static Error InvalidAttributeId(int attrId) => 
+        new(
+            "InvalidAttributeId",
+            $"The attribute id '{attrId}' is invalid."
+        );
+    
+    public static Error InvalidAttributeValue(int attrId, string attrValue) =>
+        new(
+            "InvalidAttributeValue",
+            $"The attribute value '{attrValue}' is invalid for attribute '{attrId}'."
+        );
+
 }   
 
 
