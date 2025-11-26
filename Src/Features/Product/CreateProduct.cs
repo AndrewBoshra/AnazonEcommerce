@@ -221,7 +221,7 @@ public static class CreateProduct
 
 
             dbContext.Products.Add(product);
-            dbContext.SaveChanges();
+            await dbContext.SaveChangesAsync(cancellationToken);
 
             return Result.Success(new CreateProductResult(product.Id));
         }
@@ -233,7 +233,7 @@ public class CreateProductEndpoint : ICarterModule
 {
     public void AddRoutes(IEndpointRouteBuilder app)
     {
-        app.MapPost(AppRoutes.Categories, async (CreateProduct.CreateProductCommand command, IMediator mediator, CancellationToken cancellationToken) =>
+        app.MapPost(AppRoutes.Products, async (CreateProduct.CreateProductCommand command, IMediator mediator, CancellationToken cancellationToken) =>
         {
             var result = await mediator.Send(command, cancellationToken);
             return result.Match(

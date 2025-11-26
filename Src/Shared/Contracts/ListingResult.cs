@@ -1,7 +1,7 @@
 namespace Anazon.Shared.Contracts;
 
 
-public record class ListingResult<T>
+public record class     ListingResult<T>
 {
     public required IEnumerable<T> Items { get; set; }
     public required int TotalCount { get; set; }

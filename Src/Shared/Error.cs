@@ -28,29 +28,29 @@ public record Error
         new("EmailAlreadyInUse", "The provided email is already in use.");
 
     public static Error PhoneAlreadyInUse =>
-        new("PhoneAlreadyInUse", "The provided phone number is already in use.");   
-        
+        new("PhoneAlreadyInUse", "The provided phone number is already in use.");
+
     public static Error InvalidCredentials =>
-        new("InvalidCredentials", "Invalid Credentials.");   
-        
+        new("InvalidCredentials", "Invalid Credentials.");
+
     public static Error ExpiredOrInvalidRefreshToken =>
-        new("ExpiredOrInvalidRefreshToken", "The refresh token is either expired or invalid");   
-        
+        new("ExpiredOrInvalidRefreshToken", "The refresh token is either expired or invalid");
+
     public static Error UserIsDisabledOrDeleted =>
         new("UserIsDisabledOrDeleted", "User is either disabled or deleted");
 
     public static Error BrandNotFound =>
-        new("BrandNotFound", "No brand found with the specified id.");   
-        
+        new("BrandNotFound", "No brand found with the specified id.");
+
     public static Error CategoryNotFound =>
-        new("CategoryNotFound", "No Category found with the specified id.");   
-        
+        new("CategoryNotFound", "No Category found with the specified id.");
+
     public static Error CategoryCantBeDeletedContainsProducts =>
-        new("CategoryCantBeDeletedContainsProducts", "Category can't be deleted as it contains some products");   
-        
+        new("CategoryCantBeDeletedContainsProducts", "Category can't be deleted as it contains some products");
+
     public static Error CategoryCantBeDeletedHasChildren =>
-        new("CategoryCantBeDeletedHasChildren", "Category can't be deleted as it has some children");   
-        
+        new("CategoryCantBeDeletedHasChildren", "Category can't be deleted as it has some children");
+
     public static Error CategoryInvalidParentId =>
         new("CategoryInvalidParentId", "Invalid ParentCategoryId");
 
@@ -60,16 +60,16 @@ public record Error
 
     public static Error AttributeNotFound =>
         new("AttributeNotFound", "No Attribute found with the specified id.");
-    
+
     public static Error AttributeCantBeDeletedContainsProducts =>
         new("AttributeCantBeDeletedContainsProducts", "Attribute can't be deleted as it contains some products");
-    
+
     public static Error CategoryAttributeValuesAlreadyExist(List<string> values) =>
         new(
             "CategoryAttributeValuesAlreadyExist",
             "The following attribute values already exist: " + string.Join(", ", values)
         );
-    
+
 
     public static Error AttributeValueNotFound =>
         new("AttributeValueNotFound", "No Attribute Value found with the specified value.");
@@ -88,20 +88,27 @@ public record Error
             "TagsNotFound",
             "The following tags were not found: " + string.Join(", ", missingTags)
         );
+    public static Error TagsAlreadyExists(List<string> tags) =>
+        new(
+            "TagsAlreadyExists",
+            "The following tags already exist: " + string.Join(", ", tags)
+        );
 
-    public static Error InvalidAttributeId(int attrId) => 
+    public static Error InvalidAttributeId(int attrId) =>
         new(
             "InvalidAttributeId",
             $"The attribute id '{attrId}' is invalid."
         );
-    
+
     public static Error InvalidAttributeValue(int attrId, string attrValue) =>
         new(
             "InvalidAttributeValue",
             $"The attribute value '{attrValue}' is invalid for attribute '{attrId}'."
         );
+    public static Error ProductNotFound =>
+           new("ProductNotFound", "No Product found with the specified id.");
 
-}   
+}
 
 
 public record Error<TDetails>(string Code, string Message, TDetails Details) : Error(Code, Message);

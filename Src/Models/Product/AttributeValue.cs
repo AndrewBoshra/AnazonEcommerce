@@ -7,5 +7,5 @@ public class AttributeValue : AuditableEntity
     public Attribute Attribute { get; set; } = default!;
     public string Value { get; set; } = default!;
 
-    public ProductVariantAttributeValue[] ProductAttributes { get; set; } = Array.Empty<ProductVariantAttributeValue>();
+    public IEnumerable<ProductVariantAttributeValue> ProductAttributes { get; set; } = new List<ProductVariantAttributeValue>();
 }

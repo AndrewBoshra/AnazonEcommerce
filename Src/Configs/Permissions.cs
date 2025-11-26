@@ -48,6 +48,14 @@ public static partial class Permissions
         public const string Update = "permissions.products.update";
         public const string Delete = "permissions.products.delete";
     }
+    public static class Tags
+    {
+        public const string List = "permissions.tags.list";
+        public const string View = "permissions.tags.view";
+        public const string Create = "permissions.tags.create";
+        public const string Update = "permissions.tags.update";
+        public const string Delete = "permissions.tags.delete";
+    }
 }
 
 
