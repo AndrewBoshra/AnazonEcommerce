@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 namespace Anazon.Database;
 
 
-public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(options)
+public class AppDbContext : DbContext
 {
     public DbSet<User> Users { get; set; }
     public DbSet<Role> Roles { get; set; }
@@ -25,4 +25,6 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(AppDbContext).Assembly);
     }
 
+    public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
+    public AppDbContext() { }
 }
